@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient , models
 from openai import OpenAI
-from app.models.qdrant import Chunk
+from app.models.chunking import QueryChunk
 from fastapi import HTTPException
 
 
@@ -50,7 +50,7 @@ if not qdrant_client.collection_exists(collection_name):
     
     
     
-def store_query(chunk: Chunk):
+def store_query(chunk: QueryChunk):
     """store transformed query in qdrant collection of unanswered query"""
     
     try:
@@ -103,10 +103,10 @@ def dense_search(query: str):
     points = dense_result.points
     
     
-    query_ids = [point.payload['query_id'] for point in points]
+    result = [point.payload for point in points]
     
     
-    return query_ids
+    return result
 
 
 

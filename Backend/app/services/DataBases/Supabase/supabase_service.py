@@ -251,3 +251,35 @@ def update_transform_query(query_id: str, transform_query: str):
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+    
+    
+    
+def fetch_queries_by_ids(query_ids: list[str]):
+    try:
+        response = supabase.rpc(
+            "get_queries_by_ids", 
+            {"p_query_ids": query_ids}
+        ).execute()
+        
+        return {"data": response.data}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+def update_query_review(query_id: str, review: str):
+    """Updates the review field for a specific query."""
+    try:
+        response = supabase.rpc(
+            "update_query_review", 
+            {
+                "p_query_id": query_id, 
+                "p_new_review": review
+            }
+        ).execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Query not found")
+            
+        return {"message": "Review submitted successfully", "data": response.data}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

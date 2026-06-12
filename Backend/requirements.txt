@@ -9,3 +9,6 @@ openai
 qdrant-client
 langchain_text_splitters
 deepeval
+uvicorn
+python-multipart
+tiktoken

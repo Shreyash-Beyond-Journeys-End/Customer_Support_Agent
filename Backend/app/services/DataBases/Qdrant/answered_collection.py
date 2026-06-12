@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient , models
 from openai import OpenAI
-from app.models.qdrant import Chunk
+from app.models.chunking import QueryChunk
 from fastapi import HTTPException
 
 
@@ -58,7 +58,7 @@ if not qdrant_client.collection_exists(collection_name):
     
     
     
-def store_query(chunk: Chunk):
+def store_query(chunk: QueryChunk):
     """store transformed query in qdrant collection of answered query"""
     
     

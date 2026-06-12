@@ -1,11 +1,14 @@
-from app.services.DataBases.Supabase.supabase_service import create_session , create_query , fetch_user_sessions , fetch_session_queries , create_user , fetch_user_by_email
+from app.services.DataBases.Supabase.supabase_service import create_session , create_query , fetch_user_sessions , fetch_session_queries , create_user , fetch_user_by_email, update_query_review
+from app.services.DataBases.Qdrant.unanswered_collection import store_query
 from app.models.supabase import User 
 from app.models.supabase import Session , Query
-from fastapi import HTTPException
+from fastapi import HTTPException, BackgroundTasks
+from app.services.Graph.graph_service import process_single_query
+from app.models.graph import State
 
 
 
-async def handel_create_user(name: str , email: str , password: str):
+def handel_create_user(name: str , email: str , password: str):
     
     user = User(name= name , email = email , password = password)
        
@@ -24,7 +27,7 @@ async def handel_create_user(name: str , email: str , password: str):
    
    
    
-async def handel_autorization(email: str , password: str):
+def handel_autorization(email: str , password: str):
     
     
     try:
@@ -49,7 +52,7 @@ async def handel_autorization(email: str , password: str):
        raise HTTPException(status_code=400 , detail=str(e))
 
 
-async def handel_get_user_sessions(user_id: str):
+def handel_get_user_sessions(user_id: str):
     
     try:
         
@@ -62,7 +65,7 @@ async def handel_get_user_sessions(user_id: str):
 
 
 
-async def handel_get_session_queries(session_id: str):
+def handel_get_session_queries(session_id: str):
     
     try:
         
@@ -77,7 +80,7 @@ async def handel_get_session_queries(session_id: str):
         
 
 
-async def handel_create_session(user_id: str):
+def handel_create_session(user_id: str):
     
     session = Session(user_id = user_id)
        
@@ -93,16 +96,31 @@ async def handel_create_session(user_id: str):
    
 
    
-async def handel_create_query(user_id: str , session_id: str):
+def handel_create_query(query: str, session_id: str, background_tasks: BackgroundTasks):
     
-    
-    
-    session = Session(user_id = user_id)
+    query_obj = Query(
+            session_id = session_id,
+            query = query , 
+            status = 'Pending' 
+    )
        
     try:
         
-        create_session(session)
+        create_query(query_obj)
         
+        background_tasks.add_task(
+            process_single_query,
+            query_id=query_obj.query_id,
+            query=query_obj.query,
+            session_id=session_id
+        )
+               
     except Exception as e:
        
        raise HTTPException(status_code=400 , detail=str(e))
+
+def handel_submit_review(query_id: str, review: str):
+    try:
+        return update_query_review(query_id=query_id, review=review)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

@@ -27,9 +27,9 @@ class Query(BaseModel):
     session_id: str
     query: str
     transform_query: str | None = Field(default=None)
-    resposne: str | None = Field(default=None)
+    response: str | None = Field(default=None)
     review: Literal["like" , "dislike" , None] = Field(default=None)
     status : Literal['Pending' , 'InProgress' , 'Resolved']
-    score: float
+    score: float | None = Field(default=None)
     
     

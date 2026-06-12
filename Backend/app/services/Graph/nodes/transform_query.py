@@ -5,6 +5,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from app.models.graph import State
 from app.services.DataBases.Supabase.supabase_service import update_transform_query
+from app.models.chunking import QueryChunk
+from app.services.DataBases.Qdrant.unanswered_collection import store_query
 
 load_dotenv()
 
@@ -37,6 +39,10 @@ def transform_query_node(state: State):
     response = llm.invoke([sys_message, human_msg])
     
     update_transform_query(query_id=state['query_id'] , transform_query=response.transform_query)
+    
+    chunk = QueryChunk(query_id = state['query_id'] , transform_query = response.transform_query)
+    
+    store_query(chunk)
         
     return {"transform_query": response.transform_query}
 
