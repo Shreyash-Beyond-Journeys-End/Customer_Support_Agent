@@ -1,0 +1,11 @@
+dotenv
+fastapi
+pydantic
+langchain
+langgraph
+langchain_openai
+supabase
+openai
+qdrant-client
+langchain_text_splitters
+deepeval
