@@ -10,7 +10,7 @@ def answer_node(state: State):
     
     query_id = state.get("query_id")
    
-    response = state.get("resposne") 
+    response = state.get("response") 
     score = state.get("score")
     
     if query_id:

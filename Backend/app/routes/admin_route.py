@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Query, Body, Path, UploadFile, File
 from datetime import datetime
 from typing import Optional
+from pydantic import BaseModel
 from app.services.Admin.admin_service import AdminService
 from app.models.admin import (
     AnalyticsSummaryResponse,
@@ -64,10 +65,24 @@ def get_session_context(
     return AdminService.get_session_context(session_id=session_id)
 
 
+class URLUploadRequest(BaseModel):
+    url: str
+
 @router.post("/knowledge-base/upload", response_model=UploadFileResponse)
 async def upload_knowledge_base_file(file: UploadFile = File(...)):
-    """Upload a Markdown file to be chunked and stored in Qdrant (Knowledge Base)."""
+    """Upload a File (Markdown/Text/PDF) to be chunked and stored in Qdrant (Knowledge Base)."""
     content = await file.read()
-    decoded_content = content.decode("utf-8")
-    result = AdminService.upload_knowledge_base_file(decoded_content)
+    filename = (file.filename or "").lower()
+    
+    if filename.endswith(".pdf"):
+        result = AdminService.upload_knowledge_base_pdf(content)
+    else:
+        decoded_content = content.decode("utf-8")
+        result = AdminService.upload_knowledge_base_file(decoded_content)
+    return UploadFileResponse(**result)
+
+@router.post("/knowledge-base/url", response_model=UploadFileResponse)
+def upload_knowledge_base_url(request: URLUploadRequest = Body(...)):
+    """Scrape a URL to be chunked and stored in Qdrant (Knowledge Base)."""
+    result = AdminService.upload_knowledge_base_url(request.url)
     return UploadFileResponse(**result)

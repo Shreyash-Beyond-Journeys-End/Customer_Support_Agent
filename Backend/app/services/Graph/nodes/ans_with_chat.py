@@ -29,8 +29,8 @@ def ans_with_chat_node(state: State):
         score = evaluate(query , actual_response , chat_context)
             
         if score == 0:
-            return {"resposne": None}
+            return {"response": None}
                 
-        return {"resposne": actual_response , "score" : score}
+        return {"response": actual_response , "score" : score}
             
-    return {"resposne": None}
+    return {"response": None}

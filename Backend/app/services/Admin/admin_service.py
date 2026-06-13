@@ -95,3 +95,41 @@ class AdminService:
             return {"message": "File processed and added to Qdrant successfully", "chunks_processed": len(chunks)}
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
+
+    @staticmethod
+    def upload_knowledge_base_pdf(content: bytes) -> dict:
+        try:
+            import io
+            from pypdf import PdfReader
+            
+            reader = PdfReader(io.BytesIO(content))
+            text = ""
+            for page in reader.pages:
+                extracted_text = page.extract_text()
+                if extracted_text:
+                    text += extracted_text + "\n"
+                    
+            chunks = getChunks(text, max_token=500)
+            store_query(chunks)
+            return {"message": "PDF processed and added to Qdrant successfully", "chunks_processed": len(chunks)}
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
+    @staticmethod
+    def upload_knowledge_base_url(url: str) -> dict:
+        try:
+            import requests
+            from bs4 import BeautifulSoup
+            
+            response = requests.get(url)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, "html.parser")
+            
+            text = soup.get_text(separator="\n", strip=True)
+            
+            chunks = getChunks(text, max_token=500)
+            store_query(chunks)
+            return {"message": "URL processed and added to Qdrant successfully", "chunks_processed": len(chunks)}
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
