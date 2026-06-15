@@ -3,7 +3,7 @@ title: Customer Support Agent
 emoji: 🤖
 colorFrom: blue
 colorTo: green
-sdk: static
+sdk: docker
 pinned: false
 ---
 
