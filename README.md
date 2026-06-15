@@ -1,3 +1,12 @@
+---
+title: Customer Support Agent
+emoji: 🤖
+colorFrom: blue
+colorTo: green
+sdk: static
+pinned: false
+---
+
 <div align="center">
 
 # 🤖 AI-Powered Customer Support Agent
