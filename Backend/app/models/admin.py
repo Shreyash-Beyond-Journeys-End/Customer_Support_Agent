@@ -20,13 +20,6 @@ class UnansweredQuery(BaseModel):
 class UnansweredQueryResponse(BaseModel):
     data: List[UnansweredQuery]
 
-class EscalationTopic(BaseModel):
-    topic: Optional[str]
-    escalation_count: int
-
-class EscalationTopicResponse(BaseModel):
-    data: List[EscalationTopic]
-
 class ResolveQueryRequest(BaseModel):
     query_id: str
     admin_response: str

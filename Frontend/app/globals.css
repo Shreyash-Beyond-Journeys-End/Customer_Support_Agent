@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Light (default) — friendly, high-contrast ---- */
+:root {
+  color-scheme: light;
+  --canvas: 244 246 250; /* #F4F6FA soft off-white */
+  --surface: 255 255 255; /* cards */
+  --surface-2: 240 242 248; /* subtle fills */
+  --border: 226 230 238; /* #E2E6EE */
+  --muted: 100 109 125; /* #646D7D readable secondary */
+  --ink: 24 28 38; /* #181C26 strong primary text */
+  --accent: 99 102 241; /* #6366F1 friendly indigo */
+  --accent-soft: 238 240 254; /* #EEF0FE tint */
+  --pending: 194 108 11; /* #C26C0B amber, readable on light */
+  --success: 6 137 98; /* #068962 */
+  --danger: 211 44 44; /* #D32C2C */
+}
+
+/* ---- Dark ---- */
+.dark {
+  color-scheme: dark;
+  --canvas: 15 17 23; /* #0F1117 */
+  --surface: 22 25 34; /* #161922 */
+  --surface-2: 30 34 45; /* #1E222D */
+  --border: 42 47 61; /* #2A2F3D */
+  --muted: 156 164 179; /* #9CA4B3 */
+  --ink: 236 238 243; /* #ECEEF3 */
+  --accent: 129 140 248; /* #818CF8 */
+  --accent-soft: 36 42 66; /* #242A42 */
+  --pending: 240 180 90; /* #F0B45A */
+  --success: 78 214 161; /* #4ED6A1 */
+  --danger: 242 109 109; /* #F26D6D */
+}
+
+html,
+body {
+  background-color: rgb(var(--canvas));
+  color: rgb(var(--ink));
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 9999px;
+}
+
+/* Theme-aware transitions so the toggle feels smooth, not a hard flip. */
+body,
+.theme-transition,
+.theme-transition * {
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.2s ease;
+}
+
+/* Soft dotted texture — subtle in both themes. */
+.bg-dotted {
+  background-image: radial-gradient(
+    rgb(var(--border) / 0.7) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Shimmer for the "Evaluating" state. */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--pending) / 0.12),
+    transparent
+  );
+  animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .shimmer::after {
+    display: none;
+  }
+}

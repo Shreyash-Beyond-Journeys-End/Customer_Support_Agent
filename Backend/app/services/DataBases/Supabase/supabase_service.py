@@ -266,6 +266,20 @@ def fetch_queries_by_ids(query_ids: list[str]):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+def update_query_status(query_id: str, status: str):
+    """Updates only the status field for a specific query (direct table update)."""
+    try:
+        response = supabase.table("Query").update({"status": status}).eq("query_id", query_id).execute()
+
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Query not found")
+
+        return {"message": "Status updated successfully", "data": response.data}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 def update_query_review(query_id: str, review: str):
     """Updates the review field for a specific query."""
     try:

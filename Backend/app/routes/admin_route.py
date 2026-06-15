@@ -6,7 +6,6 @@ from app.services.Admin.admin_service import AdminService
 from app.models.admin import (
     AnalyticsSummaryResponse,
     UnansweredQueryResponse,
-    EscalationTopicResponse,
     ResolveQueryRequest,
     ResolveQueryResponse,
     FeedbackQueryResponse,
@@ -31,15 +30,6 @@ def get_top_unanswered_questions(
 ):
     """Get the top unanswered questions (escalation queue)."""
     return AdminService.get_top_unanswered_questions(limit=limit)
-
-
-@router.get("/escalations/topics", response_model=EscalationTopicResponse)
-def get_escalation_frequency_by_topic(
-    start_date: Optional[datetime] = Query(None, description="Start date"),
-    end_date: Optional[datetime] = Query(None, description="End date")
-):
-    """Get escalation frequency grouped by topic."""
-    return AdminService.get_escalation_frequency_by_topic(start_date=start_date, end_date=end_date)
 
 
 @router.post("/resolve", response_model=ResolveQueryResponse)

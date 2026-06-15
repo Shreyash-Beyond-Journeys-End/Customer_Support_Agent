@@ -5,8 +5,6 @@ from app.models.admin import (
     AnalyticsSummaryResponse,
     UnansweredQueryResponse,
     UnansweredQuery,
-    EscalationTopicResponse,
-    EscalationTopic,
     FeedbackQueryResponse,
     FeedbackQuery,
     SessionContextResponse,
@@ -44,20 +42,6 @@ class AdminService:
         try:
             response = supabase.rpc("admin_get_top_unanswered_questions", {"p_limit": limit}).execute()
             return UnansweredQueryResponse(data=[UnansweredQuery(**item) for item in response.data])
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=str(e))
-
-    @staticmethod
-    def get_escalation_frequency_by_topic(start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> EscalationTopicResponse:
-        try:
-            params = {}
-            if start_date:
-                params["p_start_date"] = start_date.isoformat()
-            if end_date:
-                params["p_end_date"] = end_date.isoformat()
-                
-            response = supabase.rpc("admin_get_escalation_frequency_by_topic", params).execute()
-            return EscalationTopicResponse(data=[EscalationTopic(**item) for item in response.data])
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
 

@@ -26,7 +26,7 @@ def evaluate(query: str , response : str , content: str):
     f_success = faithfulness_metric.is_successful()
     a_success = answer_relevancy_metric.is_successful()
             
-    if not f_success and not a_success:
+    if  f_success and a_success:
             return a_score
         
     return 0

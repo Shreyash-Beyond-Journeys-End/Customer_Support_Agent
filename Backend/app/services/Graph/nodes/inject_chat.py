@@ -13,11 +13,11 @@ def inject_chat_node(state: State):
     
     query_id = state['query_id']
     
-    queries = fetch_session_queries(session_id)
-    
-    
-    chat = ""        
-    
+    queries = fetch_session_queries(session_id).get("data") or []
+
+
+    chat = ""
+
     for query in queries:
         if query['query_id'] == query_id:
             chat = chat + "\n\n" + f"query: {query['query']}" 

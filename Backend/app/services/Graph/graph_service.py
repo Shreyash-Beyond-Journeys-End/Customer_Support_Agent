@@ -2,6 +2,7 @@ import asyncio
 from app.services.Graph.graph import full_graph, half_graph
 from app.models.graph import State , State2
 from app.services.DataBases.Qdrant.unanswered_collection import dense_search
+from app.services.DataBases.Supabase.supabase_service import update_query_status
 
 async def process_single_query(query_id: str, query: str, session_id: str):
     state = State(
@@ -13,11 +14,14 @@ async def process_single_query(query_id: str, query: str, session_id: str):
         score=None,
         chat=None
     )
-    
+
     config = {"configurable": {"thread_id": session_id}}
-    
+
+
+    update_query_status(query_id=query_id, status="InProgress")
+
     result = await full_graph.ainvoke(state, config=config)
-    
+
     return result
 
 async def process_unanswered_queries_batch(target_query: str):

@@ -12,3 +12,4 @@ deepeval
 uvicorn
 python-multipart
 tiktoken
+pydantic[email]

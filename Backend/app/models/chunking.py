@@ -8,6 +8,6 @@ class RagChunk(BaseModel):
     
     
 class QueryChunk(BaseModel):
-    
+
     query_id: str
-    transformed_query: str
+    transform_query: str
