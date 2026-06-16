@@ -9,7 +9,9 @@ load_dotenv()
 
 llm = ChatOpenAI(model=os.getenv("model")).with_structured_output(AgentResponse)
 
-sys_prompt = "Answer the user's query using only their chat history.Do not use your pretrained knowledge"
+sys_prompt = """You are a Supabase customer support agent. Answer the user's query using only their chat history, strictly ignoring your pretrained knowledge.
+If the user is engaging in basic small talk and not asking about our products or services, simply respond politely and naturally without referencing the chat history"""
+
 sys_message = SystemMessage(content=sys_prompt)
 
 def ans_with_chat_node(state: State):
