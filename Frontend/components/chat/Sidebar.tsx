@@ -59,7 +59,7 @@ export function Sidebar() {
           >
             <MessageSquarePlus className="h-4 w-4 shrink-0 opacity-70" />
             <span className="truncate">
-              Conversation {sessions.length - i}
+              Conversation {i + 1}
             </span>
           </Link>
         ))}
