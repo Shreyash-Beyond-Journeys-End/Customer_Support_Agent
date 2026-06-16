@@ -1,3 +1,4 @@
+
 # Use an official Python runtime as a parent image
 FROM python:3.12-slim
 
@@ -24,8 +25,7 @@ RUN pip install --no-cache-dir -r Backend/requirements.txt
 
 # Install Node.js dependencies and build Next.js frontend
 WORKDIR $HOME/app/Frontend
-# We set NEXT_PUBLIC_API_URL to /api so the frontend routes backend requests via Next.js rewrites
-RUN echo "NEXT_PUBLIC_API_URL=/api" > .env.local
+# We rely on the local .env.local file which now has NEXT_PUBLIC_API_URL=/api
 RUN npm install
 RUN npm run build
 
