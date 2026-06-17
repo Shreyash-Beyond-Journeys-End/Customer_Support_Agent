@@ -13,11 +13,8 @@ pinned: false
 
 **A context-aware RAG + Agent system that triages incoming support requests, resolves common issues autonomously, and escalates edge cases to humans with a complete context hand-off.**
 
-<!-- ░░░ DEPLOYMENT LINKS — update the URLs after deploying ░░░ -->
-[![Frontend — Live Demo](https://img.shields.io/badge/Frontend-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](#)
-[![Backend — API](https://img.shields.io/badge/Backend-API-000000?style=for-the-badge&logo=fastapi&logoColor=white)](#)
-
-<sub>Deployment URLs are intentionally left blank — replace the `(#)` targets above once the apps are hosted.</sub>
+<!-- ░░░ DEPLOYMENT LINK ░░░ -->
+[![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=huggingface&logoColor=white)](https://pocha7084-customer-support-agent.hf.space)
 
 <br/>
 
