@@ -446,12 +446,10 @@ Open the **Admin → Knowledge base** page (or `POST /admin/knowledge-base/uploa
 
 ## 🌐 Deployment
 
-> _Deployment targets are intentionally left blank — fill these in once hosted._
 
 | Component | Platform | URL |
 | :--- | :--- | :--- |
-| **Frontend** | _TBD (e.g. Vercel)_ | `⬛ <add-url>` |
-| **Backend** | _TBD (e.g. Render / Railway / Fly)_ | `⬛ <add-url>` |
+| **Full Stack App** | Hugging Face Spaces | [Live Demo](https://pocha7084-customer-support-agent.hf.space) |
 
 **Checklist when deploying the backend:**
 - Set all environment variables from `Backend/.env`.
