@@ -1,11 +1,4 @@
----
-title: Customer Support Agent
-emoji: 🤖
-colorFrom: blue
-colorTo: green
-sdk: docker
-pinned: false
----
+
 
 <div align="center">
 
@@ -14,7 +7,7 @@ pinned: false
 **A context-aware RAG + Agent system that triages incoming support requests, resolves common issues autonomously, and escalates edge cases to humans with a complete context hand-off.**
 
 <!-- ░░░ DEPLOYMENT LINK ░░░ -->
-[![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=huggingface&logoColor=white)](https://pocha7084-customer-support-agent.hf.space)
+[![DEPLOYMENT LINKS — Live Demo](https://img.shields.io/badge/DEPLOYMENT-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://pocha7084-customer-support-agent.hf.space)
 
 <br/>
 
